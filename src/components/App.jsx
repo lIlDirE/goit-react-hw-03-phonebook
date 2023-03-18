@@ -5,6 +5,8 @@ import ContactList from './ContactList/ContactList.jsx';
 import { nanoid } from 'nanoid';
 import SearchFilter from './SearchFilter/SearchFilter.jsx';
 
+// import {resetState} from './ContactForm/ContactForm'
+
 export class App extends Component {
   state = {
     contacts: [
@@ -27,10 +29,8 @@ export class App extends Component {
       contact => newContact.name.toLowerCase() === contact.name.toLowerCase()
     )
       ? alert(`${name} is already in contacts`)
-      : this.setState(prevState => ({
-          contacts: [newContact, ...prevState.contacts],
-        }));
-  };
+      : this.setState(prevState => ({contacts: [newContact, ...prevState.contacts]})) 
+	};
 
   hendeleClickDelete = evt => {
     this.setState({

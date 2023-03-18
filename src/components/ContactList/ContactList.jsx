@@ -3,7 +3,7 @@ import ContactListElement from '../ContactListElement/ContactListElement'
 
 const ContactList = ({remove, contacts}) => { 
 	return(
-		<li>
+		<>
 		{contacts.map(({ id, name, number }) => (
 		  <ContactListElement
 			id={id}
@@ -13,7 +13,7 @@ const ContactList = ({remove, contacts}) => {
 			key={id}
 		  />
 		))}
-	  </li>
+		</>	
 	)
 }
 
