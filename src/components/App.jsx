@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm.jsx';
 import ContactList from './ContactList/ContactList.jsx';
+
 import { nanoid } from 'nanoid';
 import SearchFilter from './SearchFilter/SearchFilter.jsx';
 
@@ -37,11 +38,11 @@ export class App extends Component {
     });
   };
 
-  ChangeFilter = e => {
+  changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
 
-  FilterContacts = () => {
+  filterContacts = () => {
     return this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
@@ -54,11 +55,11 @@ export class App extends Component {
         <ContactForm onSubmit={this.addContact} />
 
         <SearchFilter
-          OnChangeFilter={this.ChangeFilter}
+          OnChangeFilter={this.changeFilter}
           valueFilter={this.state.filter}
         />
         <ContactList
-          contacts={this.FilterContacts()}
+          contacts={this.filterContacts()}
           remove={this.hendeleClickDelete}
         />
       </div>
