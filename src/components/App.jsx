@@ -18,19 +18,22 @@ export class App extends Component {
     filter: '',
   };
 
+  handleClick () {
+	console.log('Button clicked in parent component');
+  }
+
   addContact = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
       name,
       number,
     };
-
-    this.state.contacts.find(
-      contact => newContact.name.toLowerCase() === contact.name.toLowerCase()
-    )
-      ? alert(`${name} is already in contacts`)
-      : this.setState(prevState => ({contacts: [newContact, ...prevState.contacts]})) 
-	};
+		
+    if(this.state.contacts.find(contact => newContact.name.toLowerCase() === contact.name.toLowerCase())){
+		alert(`${name} is already in contacts`)
+	} else{
+		this.setState(prevState => ({contacts: [newContact, ...prevState.contacts]}))
+	}};
 
   hendeleClickDelete = evt => {
     this.setState({
@@ -42,6 +45,27 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
+  resetForm = () => {
+    this.setState({
+      name: '',
+      number: ''
+    })
+  };
+
+  componentDidMount(){
+	const contact = localStorage.getItem('contacts');
+    const parseContacs = JSON.parse(contact);
+	if(parseContacs){
+		this.setState({contacts: parseContacs})
+	} 
+  }
+
+  componentDidUpdate(_, prevState) {
+	if(prevState !== this.state.contacts){
+		localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+	}
+  }
+
   filterContacts = () => {
     return this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
@@ -52,7 +76,7 @@ export class App extends Component {
     return (
       <div>
 
-        <ContactForm onSubmit={this.addContact} />
+        <ContactForm onSubmit={this.addContact} onResetArr={this.state.contacts}/>
 
         <SearchFilter
           OnChangeFilter={this.changeFilter}

@@ -9,17 +9,28 @@ export default class ContactForm extends Component {
 		number: ''
 	}
 
-	reset = () => {
+	resetForm = () => {
 		this.setState({
 		  name: '',
-		  number: '',
-		});
-	  };
+		  number: ''
+		})
+	}
+
+	  addedContact = (newContact) => {
+		console.log(`New contact added: ${newContact}`);
+		// ваша логика добавления контакта в дочернем компоненте
+
+	  }
 
 	handleSubmitForm = (e) => {
 		e.preventDefault()
 		this.props.onSubmit(this.state);
-		this.reset();
+		const temp = this.props.onResetArr.filter( contact => 
+			contact.name.toLowerCase().includes(this.state.name.toLowerCase()))
+
+		if(temp.length === 0){
+			this.resetForm()
+		}		
 	}
 
 	handleChange = evt => {
@@ -70,4 +81,4 @@ render() {
 
 ContactForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
-  };
+  }
